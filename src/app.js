@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const db = require('../config/db')
+const db = require("./config/db")
 const users = require("./routes/user")
 const products = require("./routes/products")
 const category = require("./routes/category")
@@ -20,34 +20,9 @@ app.use("/api/comment",comments)
 app.use("/api/contact",contact)
 
 
-app.post('api/users/register ', (req, res) => {
-    
-  });
 
-  app.post('api/users/register ', (req, res) => {
-    
-  });
-
-
-  app.post('api/users/register ', (req, res) => {
-    
-  });
-
-
-  app.post('api/users/register ', (req, res) => {
-    
-  });
-
-  app.post('api/users/register ', (req, res) => {
-    
-  });
-
-
-  app.post('api/users/register ', (req, res) => {
-    
-  });
 
 
   app.listen(port, () => { 
-  
+  console.log(`Server started on port ${port}` );
   })
