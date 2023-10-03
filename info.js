@@ -91,11 +91,14 @@
 // /api/users/register :: POST
 // /api/users/update/:id :: PUT
 // /api/users/login :: POST // Include session
+
 // /api/category/create :: POST
 // /api/category/:categoryId :: GET
+
 // /api/products/create :: POST
 // /api/product/:productId :: GET
 // /api/product/update/:productId :: PUT
 // /api/product/delete/:productId :: DELETE
+
 // /api/product/comment/:productId  :: POST
 // /api/product/contact/:productId  :: POST
