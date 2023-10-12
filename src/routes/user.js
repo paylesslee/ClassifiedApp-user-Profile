@@ -116,6 +116,7 @@ router.put("/update/:id", async (request, response) => {
   }
 });   
 
+module.exports=router;
 
 
 
@@ -171,7 +172,6 @@ router.put("/update/:id", async (request, response) => {
 
 
 
-module.exports=router;
 
 
 
