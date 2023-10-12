@@ -10,6 +10,15 @@ const port = 5000;
 
 
 
+
+app.use((request, response, next) => {
+  if (request.session) next();
+  else{
+     response.send("You need to Re-login")    
+  }
+});
+
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use("/api/users",users)
