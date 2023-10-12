@@ -11,6 +11,11 @@ const port = 5000;
 
 
 
+
+
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+
 app.use((request, response, next) => {
   if (request.session) next();
   else{
@@ -19,8 +24,6 @@ app.use((request, response, next) => {
 });
 
 
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
 app.use("/api/users",users)
 app.use("/api/products",products)
 app.use("/api/category",category)
