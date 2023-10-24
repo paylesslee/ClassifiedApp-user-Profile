@@ -153,3 +153,59 @@
 
 // );
 
+
+
+
+// CREATE DATABASE ClassifiedApp;
+// use ClassifiedApp;
+
+// CREATE TABLE User(
+// userid int NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+// username varchar(50) NOT NULL UNIQUE,
+// email varchar(50) NOT NULL UNIQUE,
+// phonenumber VARCHAR(200) NOT NULL UNIQUE,
+// passwd varchar(50) NOT NULL,
+// created_on datetime,
+// updated_on datetime
+// );
+
+// CREATE TABLE Category(
+// categoryid int NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+// title varchar(50) NOT NULL,
+// created_on datetime,
+// updated_on datetime
+// );
+
+// CREATE TABLE Products(
+// productid int NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+// categoryid int NOT NULL,
+// title varchar(50) NOT NULL UNIQUE,
+// price varchar(50) NOT NULL UNIQUE,
+// paddress varchar(50) NOT NULL,
+// pstatus varchar(50) NOT NULL default 1,
+// created_on datetime,
+// updated_on datetime,
+// FOREIGN KEY(categoryid) REFERENCES Category(categoryid)
+// );
+
+// CREATE TABLE Comment(
+// commentid int NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+// userid int NOT NULL,
+// productid int NOT NULL,
+// cmessage varchar(250) NOT NULL UNIQUE,
+// created_on datetime,
+// updated_on datetime,
+// FOREIGN KEY(userid) REFERENCES User(userid)
+// FOREIGN KEY(productid) REFERENCES Products(productid)
+// );
+
+// CREATE TABLE Contact(
+// contactid int NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+// userid int NOT NULL,
+// productid int NOT NULL,
+// cmessage varchar(250) NOT NULL UNIQUE,
+// created_on datetime,
+// updated_on datetime,
+// FOREIGN KEY(userid) REFERENCES User(userid)
+// FOREIGN KEY(productid) REFERENCES Products(productid)
+// );

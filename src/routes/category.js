@@ -15,7 +15,7 @@ function queryPromise(sql,values=[]){
 }  
 
 
-router.post('/category/insert', async(req, res) => {
+router.post('/insert', async(req, res) => {
   
     try{
     const {title,created_on} = req.body;
@@ -26,17 +26,25 @@ router.post('/category/insert', async(req, res) => {
     const myquery = "INSERT INTO Category (title,created_on) VALUES(?,now())";
     const result = await queryPromise(myquery,titlevalue);
     res.send('Successfully inserted')
-    res.json({id: result.insertId,title,created_on}) // to display last add...
+    // res.json({id: result.insertId,title,created_on}) 
     
     }catch(err){
-      console.log(err)
+      res.send(err)
     }
-  });//Denis
+// DEMO
+// {
+//   "title":"Cloth Brands"
+// }
+
+  });//Denis   127.0.0.1:5000/api/category/insert
+
+
+
 
   router.get("/category/:id", async(req, res)=>{
     try{
         const category_id = req.params.id
-        const myquery = `SELECT * FROM Category WHERE id = ?`
+        const myquery = `SELECT * FROM Category WHERE categoryid = ?`
         const [result] =  await queryPromise(myquery,category_id)
         if(result){
             res.json(result)
@@ -46,7 +54,7 @@ router.post('/category/insert', async(req, res) => {
         }    }catch(error){
 res.json(error)
     }
-})//Amended by Elias
+})//Amended by Elias    127.0.0.1:5000/api/category/category/1
 
 module.exports=router;
 

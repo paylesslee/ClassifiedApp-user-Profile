@@ -18,63 +18,71 @@ function queryPromise(sql,values=[]){
 
   
 
-router.post('/create', async(request, respond) => {
+router.post('/create', async(request, response) => {
     try{
         const {category_id, title, price, paddress } = request.body;
         if(!category_id || !title || !price || !paddress ){
-            respond.send("Enter values")
-        } 
-        const uservalues = [category_id,title,price,paddress];
-        const myquery = "INSERT INTO Products (category_id, title, price, paddress,created_on ) VALUES (?,?,?,?,now())"
-        const result = await queryPromise(myquery,uservalues)
-        respond.send("INSERTED OKAY")
+            response.send("Enter values")
+        }
+         else{
+          const uservalues = [category_id,title,price,paddress];
+          const myquery = "INSERT INTO Products (categoryid, title, price, paddress,created_on ) VALUES (?,?,?,?,now())"
+          const result = await queryPromise(myquery,uservalues)
+          response.send("INSERTED OKAY")
+    
+        }
   
   
     }catch(err){
-        console.log(err)
+        response.send(err.message)
     }
+    // DEMO
+    // {
+    //   "category_id":1,
+    //   "title":"Lexus",
+    //   "price":"15,000,000",
+    //   "paddress":"Bamenda"
+    // }
     
-    });//GOLDEN
+    });//GOLDEN  127.0.0.1:5000/api/products/create
 
 
 //GETTING ALL PRODUCTS WITH STATUS 1
 
-    router.get("/products", async (req, res) => {
-      const cmd = `select * from Products
+    router.get("/", async (req, res) => {
+      const cmd = `SELECT * FROM Products
       where pstatus = 1`
-      let [result] = await queryPromise(cmd)
+      let result = await queryPromise(cmd)
       res.json(result)
-  }); //YVETTE
+
+  }); //YVETTE  127.0.0.1:5000/api/products
 
 
 
 
-    router.get('/search', async(request,response)=>{
+    router.get("/:productid", async(request,response)=>{
         try{
-          const query = request.query.q
-          const myquery = "SELECT * FROM Products where id like ?"
-          const result = await queryPromise(myquery,query)
-          if(result.lenght === 0){
-            response.json({Message:'No data was found'})
-          }else{
+          const pid = request.params.productid
+          const myquery = `SELECT * FROM Products WHERE productid =?`
+          const result = await queryPromise(myquery,pid)
             response.status(200).json(result)
-          }
-      
-        }catch(err){
-          console.log(err)
+          
         }
-      }); //VIVIAN
+        catch(err){
+          res.send(err)
+        }
+      }); //VIVIAN  127.0.0.1:5000/api/products/1
   
 
 
       router.put("/update/:productID", async (req, res) => {
         const product_id = req.params.productID
-        const { category_id, title, price, paddress, pstatus } = req.body
+        const { title, price, paddress } = req.body
         const newUpdate = [title, price, paddress, product_id]
            
         const mysqlCommand = `UPDATE Products 
         SET title = ?, price = ?, paddress = ?, updated_on = now()
-        WHERE id = ?`
+        WHERE productid = ?`
     
         try {
             if (!title || !price || !paddress) {
@@ -83,7 +91,7 @@ router.post('/create', async(request, respond) => {
             else{
     
                 await queryPromise(mysqlCommand, newUpdate)
-                updatedProduct = `SELECT * FROM Products WHERE id = ?`
+                updatedProduct = `SELECT * FROM Products WHERE productid = ?`
                 let [product] = await queryPromise(updatedProduct, product_id)
                 res.json(product)
             }
@@ -92,22 +100,29 @@ router.post('/create', async(request, respond) => {
         catch (error) {
             res.send(error.message)
         }
-    });   //BAUDWIN
+
+        // DEMO 
+        // {
+        //   "title":"Lexus",
+        //   "price":"12,000,000",
+        //   "paddress":"Bamenda"
+        // }
+    });   //BAUDWIN   127.0.0.1:5000/api/products/update/4
 
 
     router.delete("/delete/:id", async (req, res) => {
       const id = req.params.id
       const cmd = `UPDATE Products
       SET pstatus = 0
-      WHERE id = ?`
+      WHERE productid = ?`
       try {
-          await db.query(cmd, id)
+          await queryPromise(cmd, id)
           res.send("Product Deleted Successfully")
       } catch (error) {
           res.send(error.message)
       }
   
-  }); // DONADONI 
+  }); // DONADONI 127.0.0.1:5000/api/products/delete/4
 
 
 
