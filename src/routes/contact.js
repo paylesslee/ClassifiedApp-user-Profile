@@ -1,4 +1,4 @@
-const {Router} = require('express')
+const {Router, request} = require('express')
 const router = Router() 
 const db = require("../config/db")
 
@@ -17,20 +17,21 @@ function queryPromise(sql,values=[]){
   
 
 // contacting for a particular product
-router.post('/contact/:productID ', async(req, res) => {
+router.post("/:productID", async(request, response) => {
+  let pid = request.params.productID
     try{
-        const { userid, productid, cmessage} = request.body;
-        if(!userid || !productid || !cmessage){
-            respond.send("Enter values")
+        const { userid, cmessage} = request.body;
+        if(!userid || !cmessage){
+            response.send("Enter values")
         } 
-        const uservalues = [userid, productid, cmessage];
-        const myquery = "INSERT INTO Comment(userid, productid, cmessage, created_on ) VALUES (?,?,?,now())"
+        const uservalues = [userid, pid, cmessage];
+        const myquery = "INSERT INTO Contact(userid, productid, cmessage, created_on ) VALUES (?,?,?,now())"
         const result = await queryPromise(myquery,uservalues)
-        respond.send("Contact Message sent")
+        response.send("Contact Message sent")
   
   
     }catch(err){
-        console.log(err)
+        response.send(err)
     }
     
     });

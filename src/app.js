@@ -15,12 +15,14 @@ app.use(express.urlencoded({extended:true}))
 
 app.use("/api/users",users)
 
-// app.use((request, response, next) => {
-//   if (request.session) next();
-//   else{
-//      response.send("You need to Re-login")    
-//   }
-// });
+/*
+app.use((request, response, next) => {
+   if (request.session.user) next();
+  else{
+     response.send("You need to login")    
+  }
+}); 
+*/
 
 app.use("/api/products",products)
 app.use("/api/category",category)

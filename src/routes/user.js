@@ -10,7 +10,7 @@ router.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 30000, // Set your desired session duration in milliseconds
+     //maxAge: 30000, // Set your desired session duration in milliseconds
     }
   })
 );
@@ -101,7 +101,7 @@ router.post('/login_auth', async(request, response) => {
 router.use((request, response, next) => {
   if (request.session) next();
   else{
-     response.send("You need to Re-login")    
+     response.send("You need to login")    
   }
 });
 

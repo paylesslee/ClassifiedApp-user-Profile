@@ -15,22 +15,29 @@ function queryPromise(sql,values=[]){
   }  
 
   // Commenting a particular product
-router.post('/comment/:productID ', async(request, response) => {
+router.post("/:productID", async(request, response) => {
+  let pid = request.params.productID
     try{
-        const { userid, productid, cmessage} = request.body;
-        if(!userid || !productid || !cmessage){
-            respond.send("Enter values")
+        const { userid, cmessage} = request.body;
+        if(!userid || !cmessage){
+            response.send("Enter values")
         } 
-        const uservalues = [userid, productid, cmessage];
+        const uservalues = [userid, pid, cmessage];
         const myquery = "INSERT INTO Comment(userid, productid, cmessage, created_on ) VALUES (?,?,?,now())"
         const result = await queryPromise(myquery,uservalues)
-        respond.send("Comment sent")
+        response.send("Comment sent")
   
   
     }catch(err){
-        console.log(err)
+        response.send(err)
     }
-    
+    // 127.0.0.1:5000/api/comment/productid
+    /* DEMO :
+    { 
+      "userid" :1,
+      "cmessage" : "Very bad product"
+     }
+     */
     });
 
 
