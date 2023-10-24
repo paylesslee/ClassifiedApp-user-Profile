@@ -20,13 +20,13 @@ function queryPromise(sql,values=[]){
 
 router.post('/create', async(request, response) => {
     try{
-        const {userid,category_id, title, price, paddress } = request.body;
-        if(userid,!category_id || !title || !price || !paddress ){
+        const {userid,categoryid, title, price, paddress } = request.body;
+        if(userid,!categoryid || !title || !price || !paddress ){
             response.send("Enter values")
         }
          else{
-          const uservalues = [userid,category_id,title,price,paddress];
-          const myquery = "INSERT INTO Products (userid, categoryid, title, price, paddress,created_on ) VALUES (?,?,?,?,now())"
+          const uservalues = [userid,categoryid,title,price,paddress];
+          const myquery = "INSERT INTO Products (userid, categoryid, title, price, paddress,created_on ) VALUES (?,?,?,?,?,now())"
           const result = await queryPromise(myquery,uservalues)
           response.send("INSERTED OKAY")
     
@@ -39,7 +39,7 @@ router.post('/create', async(request, response) => {
     // DEMO PRODUCT OBJECT
     // {
     //   "userid" : 1,
-    //   "category_id":1,
+    //   "categoryid":1,
     //   "title":"Lexus",
     //   "price":"15,000,000",
     //   "paddress":"Bamenda"
