@@ -31,7 +31,7 @@ router.post('/insert', async(req, res) => {
     }catch(err){
       res.send(err)
     }
-// DEMO
+// DEMO CREATE CATEGORY OBJECT
 // {
 //   "title":"Cloth Brands"
 // }
