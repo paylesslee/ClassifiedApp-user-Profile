@@ -41,7 +41,7 @@ router.post('/insert', async(req, res) => {
 
 
 
-  router.get("/category/:id", async(req, res)=>{
+  router.get("/:id", async(req, res)=>{
     try{
         const category_id = req.params.id
         const myquery = `SELECT * FROM Category WHERE categoryid = ?`
@@ -54,7 +54,7 @@ router.post('/insert', async(req, res) => {
         }    }catch(error){
 res.json(error)
     }
-})//Amended by Elias    127.0.0.1:5000/api/category/category/1
+})//Amended by Elias    127.0.0.1:5000/api/category/1
 
 module.exports=router;
 
