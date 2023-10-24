@@ -47,6 +47,16 @@ router.post('/create', async(request, response) => {
     
     });//GOLDEN  127.0.0.1:5000/api/products/create
 
+//GETTING ALL PRODUCTS WITH STATUS 0
+
+router.get("/deleted_products", async (req, res) => {
+  const cmd = `SELECT * FROM Products
+  where pstatus = ?`
+  let result = await queryPromise(cmd,0)
+  res.json(result)
+
+}); //YVETTE  127.0.0.1:5000/api/products/deleted_products
+
 
 //GETTING ALL PRODUCTS WITH STATUS 1
 
@@ -125,7 +135,7 @@ router.post('/create', async(request, response) => {
   
   }); // DONADONI 127.0.0.1:5000/api/products/delete/4
 
-
+ 
 
 
 
