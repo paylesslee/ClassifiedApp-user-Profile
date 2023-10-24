@@ -44,8 +44,17 @@ function queryPromise(sql,values=[]){
     }catch(err){
         console.log(err)
     }
-    
+    // localhost:5000/api/users/register
+    /* DEMO :
+    {
+      "username" : "yan01",
+       "email":"yan@gmail.com",
+      "phonenumber":"611223344",
+       "passwd":"123"
+      }
+      */
     });
+    
 
 
 // login authentification
@@ -79,6 +88,14 @@ router.post('/login_auth', async(request, response) => {
   }
   catch(err){
     console.log(err)
+    // localhost:5000/api/users/login_auth
+    /* DEMO :
+    {
+      "email":"yan@gmail.com",
+      "passwd":"123"
+    }
+*/
+
 }});
 
 router.use((request, response, next) => {
@@ -92,7 +109,7 @@ router.use((request, response, next) => {
 router.put("/update/:id", async (request, response) => {
   try {
   const userID = request.params.id
-  const { userid, username, email, phonenumber, passwd, created_on, updated_on } = request.body
+  const { username, email, phonenumber, passwd, updated_on } = request.body
   const newUpdate = [username, email, phonenumber, passwd, updated_on]
 
   const myquery = `UPDATE User SET username = ?, email = ?, phonenumber = ?, passwd = ?, updated_on = now() WHERE userid = ${userID}`
@@ -114,11 +131,18 @@ router.put("/update/:id", async (request, response) => {
   catch (error) {
        response.send(error.message)
   }
+  // localhost:5000/api/users/update/id
+    /* DEMO :
+    {
+      "username" : "yan02",
+       "email":"yann@gmail.com",
+      "phonenumber":"600223344",
+       "passwd":"1234"
+      }
+      */
 });   
 
 module.exports=router;
-
-
 
 
 
