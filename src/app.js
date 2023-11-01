@@ -2,6 +2,7 @@ const express = require('express');
 const app = express()
 const db = require("./config/db")
 const users = require("./routes/user")
+const {render} = require('ejs')
 const products = require("./routes/products")
 const category = require("./routes/category")
 const comments = require("./routes/comments")
@@ -23,14 +24,49 @@ app.use((request, response, next) => {
   }
 }); 
 */
-
+app.set('view engine', 'ejs')
 app.use("/api/products",products)
 app.use("/api/category",category)
 app.use("/api/comment",comments)
 app.use("/api/contact",contact)
 
 
+app.get('/welcome', (request, response)=>{
+   response.render('pages/index', {})
 
+})
+
+app.get('/login', (request, response)=>{
+   response.render('pages/login', {})
+
+})
+
+app.get('/signup', (request, response)=>{
+   response.render('pages/signup', {})
+
+})
+
+app.get('/logout', (request, response)=>{
+   response.render('pages/logout', {})
+
+})
+
+app.get('/about', (request, response)=>{
+   response.render('pages/about', {})
+
+})
+
+app.get('/create_category', (request, response)=>{
+   response.render('pages/create_category', {})
+})
+
+app.get('/create_personalInfo', (request, response)=>{
+   response.render('pages/create personal_info', {})
+})
+
+app.get('/update_personalInfo', (request, response)=>{
+   response.render('pages/update personal_info', {})
+})
 
 
   app.listen(port, () => { 

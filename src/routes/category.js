@@ -23,7 +23,7 @@ router.post('/insert', async(req, res) => {
       res.send('Please Enter Values')
     }
     const titlevalue = [title];
-    const myquery = "INSERT INTO Category (title,created_on) VALUES(?,now())";
+    const myquery = "INSERT INTO Category (ctitle,created_on) VALUES(?,now())";
     const result = await queryPromise(myquery,titlevalue);
     res.send('Successfully inserted')
     // res.json({id: result.insertId,title,created_on}) 

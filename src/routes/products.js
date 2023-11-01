@@ -26,7 +26,7 @@ router.post('/create', async(request, response) => {
         }
          else{
           const uservalues = [userid,categoryid,title,price,paddress];
-          const myquery = "INSERT INTO Products (userid, categoryid, title, price, paddress,created_on ) VALUES (?,?,?,?,?,now())"
+          const myquery = "INSERT INTO Products (userid, categoryid, ptitle, price, paddress,created_on ) VALUES (?,?,?,?,?,now())"
           const result = await queryPromise(myquery,uservalues)
           response.send("INSERTED OKAY")
     
