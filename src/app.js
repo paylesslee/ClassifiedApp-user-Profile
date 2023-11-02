@@ -51,7 +51,7 @@ app.get('/logout', (request, response)=>{
 
 })
 
-app.get('/about', (request, response)=>{
+app.get('/home', (request, response)=>{
    response.render('pages/about', {})
 
 })
