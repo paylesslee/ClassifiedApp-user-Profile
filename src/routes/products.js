@@ -20,12 +20,12 @@ function queryPromise(sql,values=[]){
 
 router.post('/create', async(request, response) => {
     try{
-        const {userid,categoryid, title, price, paddress } = request.body;
-        if(userid,!categoryid || !title || !price || !paddress ){
+        const {userid,categoryid, ptitle, price, paddress } = request.body;
+        if(userid,!categoryid || !ptitle || !price || !paddress ){
             response.send("Enter values")
         }
          else{
-          const uservalues = [userid,categoryid,title,price,paddress];
+          const uservalues = [userid,categoryid,ptitle,price,paddress];
           const myquery = "INSERT INTO Products (userid, categoryid, ptitle, price, paddress,created_on ) VALUES (?,?,?,?,?,now())"
           const result = await queryPromise(myquery,uservalues)
           response.send("INSERTED OKAY")

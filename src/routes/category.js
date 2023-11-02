@@ -18,11 +18,11 @@ function queryPromise(sql,values=[]){
 router.post('/insert', async(req, res) => {
   
     try{
-    const {title,created_on} = req.body;
-    if(!title && !created_on){
+    const {ctitle,created_on} = req.body;
+    if(!ctitle && !created_on){
       res.send('Please Enter Values')
     }
-    const titlevalue = [title];
+    const titlevalue = [ctitle];
     const myquery = "INSERT INTO Category (ctitle,created_on) VALUES(?,now())";
     const result = await queryPromise(myquery,titlevalue);
     res.send('Successfully inserted')

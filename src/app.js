@@ -68,6 +68,10 @@ app.get('/update_personalInfo', (request, response)=>{
    response.render('pages/update personal_info', {})
 })
 
+app.get('/create_product', (request, response)=>{
+   response.render('pages/create_product', {})
+})
+
 
   app.listen(port, () => { 
   console.log(`Server started on port ${port}` );

@@ -1,0 +1,32 @@
+<%- include('../common/menu') %>
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal text-body-emphasis">Create Product</h1>
+  </div>
+   
+ <form action="#" method="POST">
+<div class="mb-3">
+    <label for="exampleInputcategoryid" class="form-label">categoryid</label>
+    <input type="number" name="categoryid" class="form-control" id="exampleInputcategoryid"> 
+ </div>
+<div class="mb-3">
+    <label for="exampleInputptitle" class="form-label">ptitle</label>
+    <input type="text" name="ptitle" class="form-control" id="exampleInputptitle" aria-describedby="emailHelp">
+</div>
+<div class="mb-3">
+    <label for="exampleInputprice" class="form-label">price</label>
+    <input type="number" name="price" class="form-control" id="price">
+</div>
+<div class="mb-3">
+    <label for="exampleInputpaddress" placeholder="Enter your address" class="form-label">paddress</label>
+    <input type="paddress" name="paddress" class="form-control" id="exampleInputpaddress">
+</div>
+<div class="mb-3">
+    <label for="exampleInputpstatus" class="form-label">pstatus</label>
+    <input type="pstatus" name="pstatus" class="form-control" id="exampleInputpstatus">
+</div>
+
+<button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+  <%- include('../common/footer') %>
+
