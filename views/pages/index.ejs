@@ -1,54 +1,72 @@
 <%- include('../common/menu') %>
+
+
 <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-    <h1 class="display-4 fw-normal text-body-emphasis">Hello! what are you looking for?</h1>
-  </div>
-  <main>
-    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-      <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-          <div class="card-header py-3">
-            <h4 class="my-0 fw-normal"></h4>
-          </div>
+  <h1 class="display-4 fw-normal text-body-emphasis">Hello!</h1>
+  <p class="fs-5 text-body-secondary">Your account informations are being secured, you may update them anytime.</p>
+</div>
+</header>
 
-    <h2 class="display-6 text-center mb-4">Features</h2>
-
-    <div class="table-responsive">
-      <table class="table text-center">
-        <thead>
-       
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row" class="text-start"><a href="/create_category">Create category</a></th>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-start"><a href="/create_personalInfo">Update Your Info</a></th>
-            <td></td>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-start"><a href="/create_product">Create Product</a></th>
-            <td></td>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-          </tr>
-        </tbody>
-
-        <!-- <tbody>
-          <tr>
-            <th scope="row" class="text-start"><a href="/update_personalInfo">Update Info</a></th>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-            <td><svg class="bi" width="24" height="24"><use xlink:href="#"/></svg></td>
-          </tr>
-          
-        </tbody> -->
-      </table>
+<main>
+  <% blog_post.forEach(function(blog_post){ %>
+<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+  <div class="col">
+    <div class="card mb-4 rounded-3 shadow-sm">
+      <div class="card-header py-3">
+        <h4 class="my-0 fw-normal">User information</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"><%= blog_post.username %><small class="text-body-secondary fw-light"></small></h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li></li>
+          <li><%= blog_post.email %></li>
+          <li><%= blog_post.phonenumber %></li>
+          <li><%= blog_post.created_on  %></li>
+        </ul>
+        <a href="update_personal_info"><button type="button" class="w-100 btn btn-lg btn-outline-primary">Update info</button></a>
+      </div>
     </div>
-  </main>
+  </div>
+  <% }); %>
+  <div class="col">
+    <div class="card mb-4 rounded-3 shadow-sm">
+      <div class="card-header py-3">
+        <h4 class="my-0 fw-normal">Category</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"><small class="text-body-secondary fw-light">Can't find</small></h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>a category</li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <a href="create_category"><button type="button" class="w-100 btn btn-lg btn-primary">Create it here</button></a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+      <div class="card-header py-3 text-bg-primary border-primary">
+        <h4 class="my-0 fw-normal">Product</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"><small class="text-body-secondary fw-light">Can't find</small></h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>a product</li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <a href="create_product"><button type="button" class="w-100 btn btn-lg btn-primary">Create it here</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+
+</div>
 
   <%- include('../common/footer') %>

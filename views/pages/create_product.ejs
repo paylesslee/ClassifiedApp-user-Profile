@@ -3,26 +3,30 @@
     <h1 class="display-4 fw-normal text-body-emphasis">Create Product</h1>
   </div>
    
- <form action="#" method="POST">
+ <form action="/product_new" method="POST">
+    <div class="mb-3">
+        <label for="exampleInputcategoryid" class="form-label">User ID number</label>
+        <input type="number" name="userid" class="form-control" id="exampleInputcategoryid"> 
+     </div>
 <div class="mb-3">
-    <label for="exampleInputcategoryid" class="form-label">categoryid</label>
+    <label for="exampleInputcategoryid" class="form-label">Select category</label>
     <input type="number" name="categoryid" class="form-control" id="exampleInputcategoryid"> 
  </div>
 <div class="mb-3">
-    <label for="exampleInputptitle" class="form-label">ptitle</label>
-    <input type="text" name="ptitle" class="form-control" id="exampleInputptitle" aria-describedby="emailHelp">
+    <label for="exampleInputptitle" class="form-label">Product name</label>
+    <input type="text" name="title" class="form-control" id="exampleInputptitle" aria-describedby="emailHelp">
 </div>
 <div class="mb-3">
-    <label for="exampleInputprice" class="form-label">price</label>
+    <label for="exampleInputprice" class="form-label">Product price</label>
     <input type="number" name="price" class="form-control" id="price">
 </div>
 <div class="mb-3">
-    <label for="exampleInputpaddress" placeholder="Enter your address" class="form-label">paddress</label>
+    <label for="exampleInputpaddress" placeholder="Enter your address" class="form-label">Seller address</label>
     <input type="paddress" name="paddress" class="form-control" id="exampleInputpaddress">
 </div>
 
 
-<button type="submit" class="btn btn-primary">Update</button>
+<button type="submit" class="btn btn-primary">Create</button>
 </form>
 
   <%- include('../common/footer') %>
