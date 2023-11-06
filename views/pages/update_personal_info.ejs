@@ -4,10 +4,8 @@
   </div>
 
   <form action="/update_info" method="POST">
-    <div class="mb-3">
-      <label for="exampleInputUsername" class="form-label">User To be updated</label>
-      <input type="text" name="userid" class="form-control" id="exampleInputUsername" required>
-    </div>
+    
+   <input type="text" name="userid" value="<%= useridkey %>" hidden>
     <div class="mb-3">
         <label for="exampleInputUsername" class="form-label">username</label>
         <input type="text" name="username" class="form-control" id="exampleInputUsername" required>

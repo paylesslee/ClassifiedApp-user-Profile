@@ -14,7 +14,12 @@ const port = 5000;
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-app.use("/api/users",users)
+app.use(users)
+app.use(products)
+app.use(category)
+app.use(comments)
+app.use(contact)
+
 
 /*
 app.use((request, response, next) => {
@@ -25,11 +30,13 @@ app.use((request, response, next) => {
 }); 
 */
 app.set('view engine', 'ejs')
+/*
+app.use("/api/users",users)
 app.use("/api/products",products)
 app.use("/api/category",category)
 app.use("/api/comment",comments)
 app.use("/api/contact",contact)
-
+*/
 
 app.get('/user', (request, response)=>{
    db.query("SELECT * FROM User", function(err,result){
@@ -85,29 +92,7 @@ app.post('/category_new', (request, response)=>{
          }
       })
 
-app.get('/update_personal_info', (request, response)=>{
-   response.render('pages/update_personal_info', {})
-})
 
-app.put('/update_info', (request, response)=>{
-   try{
-      const {userid,username,email,phonenumber, passwd, created_on} = request.body;
-      if(!userid && !username && !email && !phonenumber && passwd){
-        response.render('pages/create_personal_info')
-      }
-      const titlevalue = [userid,username,email,phonenumber, passwd, created_on];
-      const myquery = "INSERT INTO User(userid,username,email,phonenumber, passwd, created_on) VALUES(?,?,?,?,?,now())";
-      db.query(myquery,titlevalue, function(error,results){
-         if(error){
-            console.log(error)
-         }else{
-         response.redirect('/user')
-         }
-         })
-   }catch(error){
-            console.log(error)
-         }
-      })
 
 app.get('/create_personal_info', (request, response)=>{
    response.render('pages/create_personal_info', {})

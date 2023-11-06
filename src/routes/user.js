@@ -2,18 +2,16 @@ const {Router} = require('express')
 const router = Router() 
 const db = require("../config/db")
 const session = require('express-session')
-
+const cookieParser = require('cookie-parser')
+router.use(cookieParser())
 // Middleware for session management
-router.use(
-  session({
-    secret: 'your_secret_key', // Change this to a strong secret
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-     //maxAge: 30000, // Set your desired session duration in milliseconds
-    }
-  })
-);
+router.use(session({
+  secret: 'mysecret',
+  resave: false,
+  // maxAge: 2000,
+  saveUninitialized: false
+}))
+
 
 // Promise Function
 function queryPromise(sql,values=[]){
@@ -27,7 +25,51 @@ function queryPromise(sql,values=[]){
       })
     })
   }  
-  
+
+  router.get('/user', (request, response)=>{
+    db.query("SELECT * FROM User", function(err,result){
+       if(err){
+          console.log(err)
+       }else{
+        
+          response.render('pages/index',{blog_post:result})
+       }
+      })
+ })
+
+ router.get('/update_personal_info', (request, response)=>{
+  const userid = request.session.user.userid
+  response.render('pages/update_personal_info', {useridkey:userid})
+})
+
+router.post('/update_info', (request, response)=>{
+  const {userid,username,email,phonenumber, passwd} = request.body;
+ 
+  try{
+     
+     if(!username && !email && !phonenumber && passwd){
+       response.redirect('pages/update_personal_info')
+     }
+     const titlevalue = [username,email,phonenumber, passwd, userid];
+     const myquery = `UPDATE User 
+     SET username=?,email=?,phonenumber=?, passwd=?, updated_on= now()
+     WHERE userid = ?`;
+     db.query(myquery,titlevalue)
+      response.redirect('/user')
+    }catch(error){
+           console.log(error)
+        }
+     })
+
+  router.get("/login", (req,res)=>{
+    res.render("pages/login")
+  })
+
+
+  router.get("/logout", (req,res)=>{
+    req.session.destroy()
+    res.redirect("/login")
+  })
   
   // user registration
   router.post('/register', async(request, respond) => {
@@ -48,7 +90,7 @@ function queryPromise(sql,values=[]){
     /* DEMO :
     {
       "username" : "yan01",
-       "email":"yan@gmail.com",
+       "mailto:email":"yan@gmail.com",
       "phonenumber":"611223344",
        "passwd":"123"
       }
@@ -59,51 +101,38 @@ function queryPromise(sql,values=[]){
 
 // login authentification
 router.post('/login_auth', async(request, response) => {
+  const {email, passwd} = request.body;
+  const loginvalue = [email, passwd]
   try{
-    const {email, passwd} = request.body;
+    const loginquery = `SELECT * FROM User WHERE email = ? and passwd = ?`
+    const [user]= await queryPromise(loginquery, loginvalue)
 
-// 
-    const loginvalue = [email, passwd]
-    const loginquery = "SELECT * FROM User WHERE email = ? and passwd = ?"
-    const loginresult = await queryPromise(loginquery, loginvalue)
-
-    const user = loginresult[0];
-    console.log(user);
-
-    if(email === user.email && passwd === user.passwd){
+    if(user){
          if(request.session.user){
-          response.send(request.session.user)
-          console.log("Login successfull")
-            
+          response.redirect("/login")
           }else{
-            request.session.user = {email, passwd}
-            response.send("Login successful")
+            const userid = user.userid
+            request.session.user = {userid}
+            response.redirect("/user")
           }
           
         } 
     else{
-            response.send('Invalid credentials')
-    
+            response.redirect("/login")
     }
   }
   catch(err){
-    console.log(err)
+    response.redirect("/login")
     // localhost:5000/api/users/login_auth
     /* DEMO :
     {
-      "email":"yan@gmail.com",
+      "mailto:email":"yan@gmail.com",
       "passwd":"123"
     }
 */
 
 }});
 
-router.use((request, response, next) => {
-  if (request.session) next();
-  else{
-     response.send("You need to login")    
-  }
-});
 
 
 router.put("/update/:id", async (request, response) => {
@@ -135,7 +164,7 @@ router.put("/update/:id", async (request, response) => {
     /* DEMO :
     {
       "username" : "yan02",
-       "email":"yann@gmail.com",
+       "mailto:email":"yann@gmail.com",
       "phonenumber":"600223344",
        "passwd":"1234"
       }
@@ -143,143 +172,3 @@ router.put("/update/:id", async (request, response) => {
 });   
 
 module.exports=router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        router.put('/update', (request, response) => )
-        const {username, email, phonenumber, passwd} = request.body;
-        if (!username && !email && !phonenumber && !passwd){
-          response.send("Enter the Value to be Update")
-        }
-        // const loginvalue = [username, email, phonenumber, passwd]  
-        const loginquery = "UPDATE User SET username = ? WHERE email = ?"
-        // "UPDATE User SET email = ? WHERE email = ?"
-        // "UPDATE User SET phonenumber = ? WHERE email = ?"
-        // "UPDATE User SET passwd = ? WHERE email = ?"
-        const loginresult = await queryPromise(loginquery, loginvalue)
-        */
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*const {username, email, updated_on} = request.body;
-
-        const loginvalue = [username, email, updated_on]  
-        const loginquery = "UPDATE User SET username = ? WHERE email = ?"
-        const loginresult = await queryPromise(loginquery, loginvalue)
-         const loginvalue2 = [email, updated_on]  
-         const loginquery2 = "SELECT * FROM User WHERE email = ?"
-         const loginresult2 = await queryPromise(loginquery2, loginvalue2)
-    
-         const user = loginresult2[0];
-         console.log(user);
-         if(email === user.email){
-        
-           response.send("Update successfull")
-         }
-         else{
-           response.send("Please insert a valid email")
-         } */
-
-
-
-
-
-
-
-
-
-
-  // login : username and passwd
-  // login : email and passwd
-
-
-// get : display a page
-
-// post : insert infos
-
-// put : update an info
-
-// patch : more than one infos to update
-
-
-/*
-  db.query(selectQuery, [email], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Internal server error' });
-    }
-
-    if (results.length === 0) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    const user = results[0]; // Access the first row of results
-
-    // Verify the password (You should replace this with password hashing in the future)
-    if (password === user.passwd) {
-      // Create a session for the user
-      req.session.user = { id: user.id, username: user.username, email: user.email };
-      return res.status(200).json({ message: 'Login successful' });
-    } else {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-    if(username && passwd){
-      if(request.session.user){
-         response.send(request.session.user)
-      } else{
-        request.session.user = {username}
-        response.send(request.session.user)
-         // request.session.user = {username, passwd}
-         //response.json({Message : "Login OK"}).status(200)
-      
-      }}else{
-         response.send(404)
-         // response.status(401).json({Message : "username or password incorrect"})
-     }});
-
-  }
-   */ 
